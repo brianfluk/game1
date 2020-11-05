@@ -21,6 +21,7 @@ public class Player2 : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -51,8 +52,14 @@ public class Player2 : MonoBehaviour
         right.Normalize();
 
         rb.velocity = (right * inputX + forward * inputZ) * footspeed;
+        if (opponent != null) {
+            Vector3 DeltaVector = opponent.transform.position - transform.position;
+            DeltaVector.y = 0.0f;
+            targetRotation = Quaternion.LookRotation(DeltaVector);
+        } else {
+            Debug.Log($"no opponent to target to face {this.GetType().Name}");
+        }
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationspeed * Time.deltaTime);
-
 
     }
 }
