@@ -22,6 +22,7 @@ public class Player2 : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         gameObject.SetActive(false);
+        Physics.IgnoreCollision(opponent.GetComponent<Collider>(), GetComponent<Collider>());
     }
 
     // Update is called once per frame
